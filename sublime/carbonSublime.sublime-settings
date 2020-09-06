@@ -1,0 +1,20 @@
+{
+  "padding-vertical": "48px",
+  "padding-vorizontal": "32px",
+  "background-mode": "color",
+  "background-color": "rgba(52,79,102,0)",
+  "drop-shadow": "true",
+  "theme": "solarized dark",
+  "window-theme": "none",
+  "fontFamily": "Fira Code",
+  "fontSize": "14px",
+  "lineHeight": "133%",
+  "window-controls": "false",
+  "width-adjustment": "true",
+  "line-numbers": "false",
+  "exportSize": "2x",
+  "squaredImage": "false",
+  "hiddenCharacters": "false",
+  "name": "",
+  "width": 680
+}

@@ -1,0 +1,6 @@
+[
+	{ "keys": ["ctrl+tab"], "command": "next_view" },
+	{ "keys": ["ctrl+shift+tab"], "command": "prev_view" },
+	{"keys": ["ctrl+alt+w"], "command": "carbon_sublime"},
+
+]

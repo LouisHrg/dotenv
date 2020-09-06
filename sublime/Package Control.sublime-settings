@@ -1,0 +1,40 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"Alignment",
+		"AutoFileName",
+		"Carbon",
+		"Color Highlighter",
+		"DocBlockr",
+		"Dockerfile Syntax Highlighting",
+		"DotENV",
+		"Edit Command Palette",
+		"GenerateUUID",
+		"Git blame",
+		"GotoDocumentation",
+		"Halcyon Theme",
+		"HTMLBeautify",
+		"JSON Reindent",
+		"JsonTree",
+		"Laravel Blade Highlighter",
+		"LineJumper",
+		"Markdown Extended",
+		"nginx",
+		"Normalize Indentation",
+		"Origami",
+		"Package Control",
+		"PackageSync",
+		"PHP Codebeautifier",
+		"PHP Getters and Setters",
+		"PhpDoc",
+		"Pretty JSON",
+		"SideBarEnhancements",
+		"Themr",
+		"Vue Syntax Highlight"
+	]
+}

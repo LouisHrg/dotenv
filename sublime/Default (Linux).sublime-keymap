@@ -1,0 +1,11 @@
+[
+	{ "keys": ["ctrl+tab"], "command": "next_view" },
+	{ "keys": ["ctrl+shift+tab"], "command": "prev_view" },
+  {
+      "button": "button1",
+      "count": 1,
+      "modifiers": ["ctrl"],
+      "press_command": "drag_select",
+      "command": "goto_definition"
+  }
+]
