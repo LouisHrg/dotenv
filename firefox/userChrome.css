@@ -1,82 +1,135 @@
-/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/autohide_toolbox.css made available under Mozilla Public License v. 2.0
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/hide_tabs_with_one_tab.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
-/* Hide the whole toolbar area unless urlbar is focused or cursor is over the toolbar */
-/* Dimensions on non-Win10 OS probably needs to be adjusted */
+/* Makes tabs toolbar items zero-height initially and sets enlarge them to fill up space equal to tab-min-height set on tabs */
+/* Firefox 65+ only */
 
-/* Compatibility options for hide_tabs_toolbar.css and tabs_on_bottom.css at the end of this file */
+:root[sizemode="normal"] #nav-bar{ --uc-window-drag-space-width: 20px }
 
-:root{
-  --uc-autohide-toolbox-delay: 200ms; /* Wait 0.1s before hiding toolbars */
-}
+#titlebar{ -moz-appearance: none !important; }
+#TabsToolbar{ min-height: 0px !important }
 
-@media (-moz-os-version: windows-win10){
+#tabbrowser-tabs, #tabbrowser-tabs > .tabbrowser-arrowscrollbox, #tabbrowser-arrowscrollbox{ min-height: 0 !important; }
 
-  :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 9px !important; }
-  :root[tabsintitlebar][sizemode="maximized"] #navigator-toolbox{ margin-top: -1px }
-
-  @media screen and (min-resolution: 1.25dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 8px !important; }
-  }
-  @media screen and (min-resolution: 1.5dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 8px !important; }
-  }
-  @media screen and (min-resolution: 2dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 7px !important; }
-  }
-  #navigator-toolbox:not(:-moz-lwtheme){ background-color: rgb(32, 35, 64) !important; }
-}
-
-:root[sizemode="fullscreen"]{ margin-top: 0px !important; }
-
-#navigator-toolbox{
-  position: fixed !important;
-  display: block;
-  background-color: var(--lwt-accent-color,black) !important;
-  transition: transform 82ms linear, opacity 82ms linear !important;
-  transition-delay: var(--uc-autohide-toolbox-delay) !important;
-  transform-origin: top;
-  line-height: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-#navigator-toolbox:-moz-any(:hover,:focus-within){ transition-delay: 33ms !important }
-
-#navigator-toolbox > *{ line-height: normal; pointer-events: auto }
-
-#navigator-toolbox,
-#navigator-toolbox > *{
-  width: 100vw;
+:root:not([customizing]) #tabbrowser-tabs .tabs-newtab-button,
+:root:not([customizing]) #tabs-newtab-button,
+:root:not([customizing]) #TabsToolbar-customization-target > .toolbarbutton-1,
+:root:not([customizing]) #TabsToolbar .titlebar-button{
   -moz-appearance: none !important;
+  height: 0px;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  -moz-box-align: stretch;
+  margin: 0 !important;
 }
 
-#navigator-toolbox:not(:focus-within):not(:hover){
-  transform: rotateX(86deg); /* This may need to be lower in osx - like 75 or so */
-  opacity: 0;
+#tabbrowser-tabs .tabbrowser-tab{ height: var(--tab-min-height) }
+
+#tabbrowser-tabs .tabbrowser-tab[first-visible-tab="true"][last-visible-tab="true"]{
+  visibility: collapse !important;
 }
 
-:root[sizemode="maximized"] #navigator-toolbox:not(:focus-within):not(:hover){ transform: rotateX(89deg) }
+/* Button re-styling */
+#tabs-newtab-button:hover,
+#tabbrowser-tabs .tabs-newtab-button:hover{ background-color: var(--toolbarbutton-hover-background) }
 
-/* Don't apply transform before window has been fully created */
-:root:not([sessionrestored]) #navigator-toolbox{ transform:none !important }
-
-:root[customizing] #navigator-toolbox{
-  position: relative !important;
-  transform: none !important;
-  opacity: 1 !important;
+#tabs-newtab-button > .toolbarbutton-icon,
+#tabbrowser-tabs .tabs-newtab-button > .toolbarbutton-icon{
+  padding: 0 !important;
+  transform: scale(0.6);
+  background-color: transparent !important;
+}
+/* Extra top padding  in maximized window */
+@media (-moz-os-version: windows-win10){
+  :root[sizemode="maximized"] #navigator-toolbox{ padding-top:7px !important; }
+}
+/* Fix window controls not being clickable */
+:root[tabsintitlebar] #toolbar-menubar[autohide="true"][inactive]{
+  transition: height 0ms steps(1) 80ms;
+}
+#nav-bar{
+  border-inline: var(--uc-window-drag-space-width) solid var(--toolbar-bgcolor);
 }
 
-#navigator-toolbox[inFullscreen] > #PersonalToolbar,
-#PersonalToolbar[collapsed="true"]{ display: none }
 
-/* Uncomment this if tabs toolbar is hidden with hide_tabs_toolbar.css */
- /*#titlebar{ margin-bottom: -9px }*/
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/compact_urlbar_megabar.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
 
-/* Uncomment the following for compatibility with tabs_on_bottom.css - this isn't well tested though */
-/*
-:root{ --uc-titlebar-padding: 0px !important; }
-#navigator-toolbox{ flex-direction: column; display: flex; }
-#titlebar{ order: 2 }
-*/
+/* Make urlbar appear more compact */
+#urlbar[breakout]{
+  margin-inline-start: 0px !important;
+  width: 100% !important;
+  left: 0 !important;
+  top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+}
+#urlbar[breakout]:not([open]){ bottom: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important; }
+.urlbarView{ margin-inline: 0 !important; width: auto !important; }
+.urlbarView-row{ padding: 0 2px !important; }
+.urlbarView-row-inner{ padding-inline-start: 4px !important; }
+#urlbar-background{ animation: none !important; }
+#urlbar-input-container{ padding: 0 !important; height: 100% !important; }
+#identity-box{ padding-block: var(--urlbar-icon-padding) }
+.urlbarView > .search-one-offs:not([hidden]){ padding-block: 0px !important; }
 
+/*https://reddit.com/r/FirefoxCSS/comments/gc7w2j/collapsing_url_bar_improved_pywal_theme/fp9pu2s/
+  /* auto-hide nav-bar */
+  #navigator-toolbox {
+    -moz-appearance: none;
+    background-color: transparent !important;
+    border-top: none;
+  }
+  .browser-toolbar:not(.titlebar-color),
+  #tabbrowser-tabs:not([movingtab])
+    > .tabbrowser-arrowscrollbox
+    > .tabbrowser-tab
+    > .tab-stack
+    > .tab-background[multiselected='true']:-moz-lwtheme,
+  #tabbrowser-tabs:not([movingtab])
+    > .tabbrowser-arrowscrollbox
+    > .tabbrowser-tab
+    > .tab-stack
+    > .tab-background[selected='true']:-moz-lwtheme,
+  * {
+    --tab-line-color: var(--color1);
+    --tab-min-width: 76px;
+  }
+  #urlbar, #navigator-toolbox #searchbar {border: none !important;}
+
+  #urlbar:not(.megabar):not([focused='true']):-moz-lwtheme,
+  #urlbar.megabar:not([focused='true']):-moz-lwtheme > #urlbar-background,
+  #navigator-toolbox #searchbar:not(:focus-within):-moz-lwtheme,
+  #navigator-toolbox {
+    border: none !important;
+  }
+  #urlbar:not(.megabar):-moz-lwtheme,
+  #urlbar.megabar:-moz-lwtheme > #urlbar-background,
+  #navigator-toolbox #searchbar:-moz-lwtheme {
+    background-color: var(--background) !important;
+  }
+  #navigator-toolbox {
+    --tabs-border-color: var(--background) !important;
+  }
+
+  toolbox {
+    z-index: 10;
+    margin-top: 0px !important;
+    margin-bottom: -30px !important;
+    height: 0 !important;
+    pointer-events: none;
+  }
+  vbox {pointer-events: all;}
+
+
+  #nav-bar {
+    opacity: 0;
+    transform-origin: 0 0;
+    pointer-events: none;
+    transition: transform, ease-in-out 0.2s, opacity 0.2s ease-in-out !important;
+  }
+  /* All the states in which the URL bar is visible */
+  vbox:hover ~ #nav-bar, toolbox:focus-within > #nav-bar, #nav-bar:hover, #mainPopupSet:hover ~ box #nav-bar, #mainPopupSet:focus-within ~ box #nav-bar {
+    opacity: 1;
+    transform: none;
+    pointer-events: all;
+  }
+/* end auto hide nav-bar */
